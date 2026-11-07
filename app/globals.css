@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --midnight: #07070b;
+  --ink: #0e0e16;
+  --gold: #d9bb8a;
+  --gold-deep: #b8935a;
+  --cream: #f5ecd9;
+  --soft: #fbf9f4;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-midnight: var(--midnight);
+  --color-ink: var(--ink);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-cream: var(--cream);
+  --color-soft: var(--soft);
+  --font-sans: var(--font-dmsans);
+  --font-serif: var(--font-cormorant);
+  --font-hand: var(--font-caveat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--midnight);
+  color: var(--cream);
+  font-family: var(--font-dmsans), system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(60rem 40rem at 50% -10%, rgba(217, 187, 138, 0.12), transparent 60%),
+    radial-gradient(40rem 30rem at 100% 100%, rgba(184, 147, 90, 0.08), transparent 60%),
+    var(--midnight);
+  min-height: 100dvh;
+}
+
+.font-serif-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+.font-hand {
+  font-family: var(--font-caveat), cursive;
+}
+
+.gold-text {
+  background: linear-gradient(100deg, #f3dfb8 0%, #d9bb8a 40%, #fff1d0 55%, #b8935a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+.btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0 2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f3dfb8, #d9bb8a 50%, #b8935a);
+  color: #1a1408;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  box-shadow: 0 10px 40px -10px rgba(217, 187, 138, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 50px -10px rgba(217, 187, 138, 0.8);
+}
+.btn-gold:active {
+  transform: translateY(0) scale(0.98);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 187, 138, 0.4);
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  background: rgba(217, 187, 138, 0.1);
+  border-color: var(--gold);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Section entrance */
+.stage {
+  animation: stage-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.rise {
+  opacity: 0;
+  animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes stage-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+@keyframes photo-reveal {
+  from { clip-path: inset(0 0 100% 0); filter: blur(14px) brightness(0.4); transform: scale(1.08); }
+  to { clip-path: inset(0 0 0 0); filter: blur(0) brightness(1); transform: scale(1); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+@keyframes float-up {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-260px) scale(1.2) rotate(var(--r, 10deg)); }
+}
+@keyframes lid-open {
+  to { transform: translateY(-70px) rotate(-18deg) translateX(-24px); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes bar-idle {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
