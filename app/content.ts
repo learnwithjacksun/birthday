@@ -7,8 +7,6 @@ export const assets = {
   photo: "/celebrant.jpeg",
   // Your recorded voice note (a WhatsApp .m4a). Swap the file to change it.
   voice: "/voice-message.m4a",
-  // Drop a birthday song at public/birthday-song.mp3 (or change this path).
-  song: "/birthday-song.mp3",
 };
 
 export const copy = {
@@ -35,10 +33,6 @@ export const copy = {
     button: "Play my message",
     pause: "Pause",
     replay: "Play again",
-  },
-  song: {
-    title: "This one is for you, because birthdays deserve their own soundtrack.",
-    missing: "Your song is on its way…",
   },
   gift: {
     eyebrow: "Wait, you thought that was all?",

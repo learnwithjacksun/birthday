@@ -24,13 +24,7 @@ export function PlayIcon({ playing }: { playing: boolean }) {
   );
 }
 
-export default function VoicePlayer({
-  onPlay,
-  onNext,
-}: {
-  onPlay: () => void;
-  onNext: () => void;
-}) {
+export default function VoicePlayer({ onNext }: { onNext: () => void }) {
   const audio = useRef<HTMLAudioElement>(null);
   const bars = useRef<(HTMLSpanElement | null)[]>([]);
   const ctxRef = useRef<AudioContext | null>(null);
@@ -104,7 +98,6 @@ export default function VoicePlayer({
     const el = audio.current;
     if (!el) return;
     if (el.paused) {
-      onPlay();
       setupAnalyser();
       try {
         await ctxRef.current?.resume();
