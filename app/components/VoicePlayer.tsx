@@ -24,7 +24,15 @@ export function PlayIcon({ playing }: { playing: boolean }) {
   );
 }
 
-export default function VoicePlayer({ onNext }: { onNext: () => void }) {
+export default function VoicePlayer({
+  onNext,
+  onVoicePlay,
+  onVoiceStop,
+}: {
+  onNext: () => void;
+  onVoicePlay: () => void;
+  onVoiceStop: () => void;
+}) {
   const audio = useRef<HTMLAudioElement>(null);
   const bars = useRef<(HTMLSpanElement | null)[]>([]);
   const ctxRef = useRef<AudioContext | null>(null);
@@ -184,8 +192,14 @@ export default function VoicePlayer({ onNext }: { onNext: () => void }) {
         onLoadedMetadata={(e) => setDur(e.currentTarget.duration)}
         onDurationChange={(e) => setDur(e.currentTarget.duration)}
         onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
-        onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        onPlay={() => {
+          setPlaying(true);
+          onVoicePlay();
+        }}
+        onPause={() => {
+          setPlaying(false);
+          onVoiceStop();
+        }}
         onEnded={() => {
           setPlaying(false);
           setHeard(true);

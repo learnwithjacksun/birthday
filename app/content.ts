@@ -7,6 +7,8 @@ export const assets = {
   photo: "/celebrant.jpeg",
   // Your recorded voice note (a WhatsApp .m4a). Swap the file to change it.
   voice: "/voice-message.m4a",
+  // Background music (loops softly, pauses while the voice message plays).
+  music: "/background-music.mp3",
 };
 
 export const copy = {
@@ -39,6 +41,17 @@ export const copy = {
     title: "There's just one more thing.",
     hint: "Tap the gift",
     wish: "My wish for you: that you never lose the reasons that make you happy. May life keep handing you beautiful ones, and may this new chapter bring you joy, growth, answered prayers, and everything your heart genuinely wants.",
+  },
+  wish: {
+    eyebrow: "One last thing…",
+    title: "Make a wish.",
+    hint: "Close your eyes, think of something good, then tap the candle, or blow on it.",
+    mic: "Blow into your mic 🎤",
+    listening: "Listening… blow!",
+    micDenied: "No mic access. Just tap the candle instead.",
+    doneEyebrow: "Wish made ✨",
+    doneTitle: "Consider it noted.",
+    doneLine: "Now go and make it happen.",
   },
   closing: {
     title: "Happy birthday once again.",

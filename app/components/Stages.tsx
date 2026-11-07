@@ -7,7 +7,7 @@ import Confetti from "./Confetti";
 
 export function Stage({ children }: { children: ReactNode }) {
   return (
-    <section className="stage relative z-10 mx-auto flex min-h-dvh w-full max-w-xl flex-col items-center justify-center gap-8 px-4 py-16 text-center">
+    <section className="stage relative z-10 mx-auto flex min-h-dvh w-full max-w-xl flex-col items-center justify-center gap-8 px-4 pb-32 pt-16 text-center">
       {children}
     </section>
   );

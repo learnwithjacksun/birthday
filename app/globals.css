@@ -146,6 +146,10 @@ input:focus-visible {
   25% { transform: rotate(-3deg); }
   75% { transform: rotate(3deg); }
 }
+@keyframes flicker {
+  from { transform: scale(1, 1) rotate(-2deg); opacity: 0.92; }
+  to { transform: scale(0.92, 1.08) rotate(2deg); opacity: 1; }
+}
 @keyframes bar-idle {
   0%, 100% { transform: scaleY(0.25); }
   50% { transform: scaleY(1); }

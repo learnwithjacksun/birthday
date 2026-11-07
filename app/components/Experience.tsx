@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Particles from "./Particles";
 import { Closing, Letter, Reveal, Welcome } from "./Stages";
 import VoicePlayer from "./VoicePlayer";
 import GiftBox from "./GiftBox";
+import Candle from "./Candle";
+import BackgroundMusic, { type MusicControls } from "./BackgroundMusic";
 
-const STAGES = ["welcome", "reveal", "letter", "voice", "gift", "closing"] as const;
+const STAGES = ["welcome", "reveal", "letter", "voice", "gift", "wish", "closing"] as const;
 type StageName = (typeof STAGES)[number];
 
 export default function Experience() {
   const [stage, setStage] = useState<StageName>("welcome");
   const [round, setRound] = useState(0); // bump on replay to remount everything fresh
+
+  const music = useRef<MusicControls | null>(null);
 
   const go = (s: StageName) => {
     setStage(s);
@@ -21,6 +25,7 @@ export default function Experience() {
   const stageIndex = STAGES.indexOf(stage);
 
   const replay = () => {
+    music.current?.reset();
     setRound((r) => r + 1);
     go("welcome");
   };
@@ -43,16 +48,28 @@ export default function Experience() {
       )}
 
       <div key={round}>
-        {stage === "welcome" && <Welcome onOpen={() => go("reveal")} />}
+        {stage === "welcome" && <Welcome onOpen={() => {
+              music.current?.start(); // inside the click, so the browser allows playback
+              go("reveal");
+            }} />}
         {stage === "reveal" && <Reveal onNext={() => go("letter")} />}
         {stage === "letter" && <Letter onNext={() => go("voice")} />}
         {stage === "voice" && (
-          <VoicePlayer onNext={() => go("gift")} />
+          <VoicePlayer
+            onNext={() => {
+              music.current?.unduck();
+              go("gift");
+            }}
+            onVoicePlay={() => music.current?.duck()}
+            onVoiceStop={() => music.current?.unduck()}
+          />
         )}
-        {stage === "gift" && <GiftBox onNext={() => go("closing")} />}
+        {stage === "gift" && <GiftBox onNext={() => go("wish")} />}
+        {stage === "wish" && <Candle onNext={() => go("closing")} />}
         {stage === "closing" && <Closing onReplay={replay} />}
       </div>
 
+      <BackgroundMusic controlsRef={music} visible={stage !== "welcome"} />
     </main>
   );
 }
